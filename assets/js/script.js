@@ -10,9 +10,27 @@ const addTaskInputBtn = document.querySelector("#add-task-btn")
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
+function saveTaskInLocalStorage () {
+    /* Stringify the information so it stores into localStorage */
+    localStorage.setItem('tasks', JSON.stringify(storedTasks));
+}
+
+function GetTaskInLocalStorage () {
+
+    /* First parse the local storage so we can use the information */
+    let storedTasks = JSON.parse(localStorage.getItem('tasks'));
+
+    /*Checking if there is anything, and if not have it as an empty array*/
+    if (!storedTasks) {
+        storedTasks = []
+    }
+    return storedTasks;
+};
+
+
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-
+    console.log(crypto.randomUUID());
 }
 
 // Todo: create a function to create a task card
