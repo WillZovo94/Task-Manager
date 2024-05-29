@@ -16,6 +16,9 @@
 </head>
 
 <body>
+<!-- Created a div for an overlay -->
+<div id="overlay-div"></div>
+
   <header class="p-4 mb-4 text-center border-bottom border-5">
     <h1 class="display-3">Task Board</h1>
     <p class="lead">A simple Kanban board for task management</p>
@@ -25,6 +28,38 @@
       <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
     <!-- Todo: Create a modal with a form to add tasks -->
+
+    <form id="official-modal">
+        <header id="modal-header">
+            <p>Add Task</p>
+            <button id="cancel-btn">X</button>
+        </header>
+        
+        <div id="modal-content-1">
+            <fieldset id="modal-1">
+                <label for="task-title-input">Task Title</label>
+                <input type="text" id="task-title-input">
+            </fieldset>
+
+            <fieldset id="modal-2">
+                <label for="task-date-input">Task Due Date</label>
+                <input type="text" id="task-date-input">
+            </fieldset>
+        </div>
+
+        <fieldset id="modal-content-2">
+            <label for="task-description-input">Task Description</label>
+            <textarea id="task-description-input"></textarea>
+        </fieldset>
+
+        <input type="Submit">
+        <button>Cancel</button>
+    </form>
+
+<!-- End of modal -->
+
+
+
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
         <div id="to-do" class="card border-light mb-3 lane flex-grow-1">
