@@ -30,8 +30,12 @@ function GetTaskInLocalStorage () {
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-    console.log(crypto.randomUUID());
+    let generateTaskId = crypto.randomUUID();
+    console.log(generateTaskId);
+    return generateTaskId;
 }
+
+generateTaskId();
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
