@@ -10,11 +10,6 @@ const addTaskInputBtn = document.querySelector("#add-task-btn")
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
-function saveTaskInLocalStorage () {
-    /* Stringify the information so it stores into localStorage */
-    localStorage.setItem('tasks', JSON.stringify(storedTasks));
-}
-
 function GetTaskInLocalStorage () {
 
     /* First parse the local storage so we can use the information */
@@ -26,6 +21,14 @@ function GetTaskInLocalStorage () {
     }
     return storedTasks;
 };
+
+
+
+function saveTaskInLocalStorage (storedTasks) {
+    /* Stringify the information so it stores into localStorage */
+    localStorage.setItem('tasks', JSON.stringify(storedTasks));
+}
+
 
 
 // Todo: create a function to generate a unique task id
@@ -65,7 +68,7 @@ function renderTaskList() {
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
  // maybe I should of start with this one to get more information? Like inputs...
-    
+ event.preventDefault();
  //Storing data into variables.
  const taskTitle = taskTitleInput.value;
  const taskDescription = taskDescriptionInput.value;
@@ -79,14 +82,16 @@ function handleAddTask(event){
     status: 'To-Do'
  }
 
- const gatherStorage = GetTaskInLocalStorage();
- gatherStorage.push(genTask);
+ const storedTasks = GetTaskInLocalStorage();
+ storedTasks.push(genTask);
 
- saveTaskInLocalStorage();
+ saveTaskInLocalStorage(storedTasks);
 
  taskTitle.value = '';
  taskDescription.value = '';
  taskDueDate.value = '';
+
+ return;
 
  // Not getting any input into the storage...
 }
@@ -104,7 +109,6 @@ function handleDrop(event, ui) {
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
 
-
 });
 
 addTaskBtn.addEventListener('click', function() {
@@ -113,5 +117,9 @@ addTaskBtn.addEventListener('click', function() {
     modal.setAttribute('style', 'visibility: visible');
     overlay.setAttribute('style', 'visibility: visible');
   })
+
+
+  addTaskInputBtn.addEventListener('click', handleAddTask)
+
 
 
