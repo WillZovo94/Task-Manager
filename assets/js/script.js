@@ -39,30 +39,13 @@ function generateTaskId() {
 }
 
 // Todo: create a function to create a task card
-function createTaskCard(task) {
+function createTaskCard() {
 
-    /*This is to create elements with stored values from input*/
-    const taskCard = document.createElement('div');
-        taskCard.addClass('card task-card')
-      // need to create values  taskCard.setAttribute('id', 'blank');
-    const cardheader = document.createElement('div');
-        cardheader.addClass('card-header');
-      // need to create values cardheader.textContent = 'blank'
-    const cardMain = document.createElement('div');
-        cardMain.addClass('card-p');
-    const taskDescription = document.createElement('p');
-      // need to create values  taskDescription.textContent = 'blank';
-    const taskDate = document.createElement('p');
-        taskDate.addClass('card-p')
-
-    // need to somehow figure out the due date thing.
-    // maybe button function? delete button, submit, back?
-    //need to append these so its visible on page...
 }
 
 // Todo: create a function to render the task list and make cards draggable
-function renderTaskList() {
-  
+function renderTaskList(storedTasks) {
+
 }
 
 // Todo: create a function to handle adding a new task
@@ -96,9 +79,8 @@ function handleAddTask(event){
  taskDescriptionInput.value = '';
  taskDateInput.value = '';
 
- return;
+ renderTaskList(storedTasks);
 
- // Not getting any input into the storage...
 }
 
 // Todo: create a function to handle deleting a task
