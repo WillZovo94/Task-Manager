@@ -91,6 +91,11 @@ function handleAddTask(event){
  taskDescription.value = '';
  taskDueDate.value = '';
 
+ const modal = document.querySelector('#official-modal')
+ const overlay = document.querySelector('#overlay-div');
+ modal.setAttribute('style', 'visibility: hidden');
+ overlay.setAttribute('style', 'visibility: hidden');
+
  return;
 
  // Not getting any input into the storage...
