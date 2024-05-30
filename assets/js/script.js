@@ -7,7 +7,8 @@ const addTaskInputBtn = document.querySelector("#add-task-btn")
 
 
 // Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks"));
+// let taskList = JSON.parse(localStorage.getItem("tasks"));
+let storedTasks = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 function GetTaskInLocalStorage () {
@@ -39,36 +40,58 @@ function generateTaskId() {
 }
 
 // Todo: create a function to create a task card
-function createTaskCard(task) {
+function createTaskCard(storedTasks) {
   GetTaskInLocalStorage();
 
-  const card = $('div').addClass('card my-2').attr('task-id', task.id);
-  const cardBody = $('div').addClass('card-body');
-  const cardHeader = $('h2').addClass('card-title').text(task.taskTitle);
-  const cardDescription = $('p').addClass('card-p card-desc').text(task.taskDescription);
-  const cardDueDate = $('p').addClass('card-p card-due-date').text(task.taskDueDate);
+  const card = $('<div>').addClass('card my-2 draggable').attr('task-id', storedTasks.id);
+  const cardBody = $('<div>').addClass('card-body');
+  const cardHeader = $('<h2>').addClass('card-title').text(storedTasks.Title);
+  const cardDescription = $('<p>').addClass('card-p card-desc').text(storedTasks.Description);
+  const cardDueDate = $('<p>').addClass('card-p card-due-date').text(storedTasks.DueDate);
 
-  if (task.taskDueDate && task.status !== 'done'); {
+  if (storedTasks.taskDueDate && storedTasks.status !== 'done'); {
     const current = dayjs();
-    const taskDueDate = dayjs(task.taskDueDate);
+    const taskDueDate = dayjs(storedTasks.taskDueDate);
+
+    if (current.isSame(taskDueDate, 'day')) {
+      card.addClass('due-today');
+    } else if (now.isAfter(taskDueDate)) {
+      card.addClass('past-date');
+    }
   }
 
-  if (current.isSame(taskDueDate, 'day')) {
-    card.addClass('due-today');
-  } else if (now.isAfter(taskDueDate)) {
-    card.addClass('past-date');
-  }
-
-  card.append(cardBody);
   cardBody.append(cardHeader, cardDescription, cardDueDate);
+  card.append(cardBody);
+
 
   return card;
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList(storedTasks) {
+  const todoCards = $('#todo-cards').empty();
+  const inProgressCards = $('#in-progress-cards').empty();
+  const finishedCards = $('#done-cards').empty();
+  if (storedTasks && storedTasks.length > 0) {
+    for (let i = 0; i < storedTasks.length; i++) {
+      const card = createTaskCard(storedTasks[i]);
+  
+      if (storedTasks[i].status === 'to-do') {
+        todoCards.append(card);
+      } else if (storedTasks[i].status === 'in-progress') {
+        inProgressCards.append(card);
+      } else if (storedTasks[i].status === 'finished') {
+        finishedCards.append(card);
+      }
+  
+    }
+  }
 
-}
+  $( function() {
+    $( ".draggable" ).draggable();
+  } );
+
+  };
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
@@ -84,7 +107,7 @@ function handleAddTask(event){
     Title: taskTitle,
     Description: taskDescription,
     DueDate: taskDueDate,
-    status: 'To-Do'
+    status: 'to-do'
  }
 
  const storedTasks = GetTaskInLocalStorage();
@@ -122,17 +145,24 @@ $(document).ready(function () {
         $( "#task-date-input" ).datepicker();
       } );
 
+
+
+
 });
 
 addTaskBtn.addEventListener('click', function() {
-    const modal = document.querySelector('#official-modal')
-    const overlay = document.querySelector('#overlay-div');
-    modal.setAttribute('style', 'visibility: visible');
-    overlay.setAttribute('style', 'visibility: visible');
-  })
+  const modal = document.querySelector('#official-modal')
+  const overlay = document.querySelector('#overlay-div');
+  modal.setAttribute('style', 'visibility: visible');
+  overlay.setAttribute('style', 'visibility: visible');
+})
 
 
-  addTaskInputBtn.addEventListener('click', handleAddTask)
+addTaskInputBtn.addEventListener('click', handleAddTask)
+
+renderTaskList(storedTasks);
+
+
 
 
 
