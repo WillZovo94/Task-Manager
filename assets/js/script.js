@@ -87,14 +87,14 @@ function handleAddTask(event){
 
  saveTaskInLocalStorage(storedTasks);
 
- taskTitle.value = '';
- taskDescription.value = '';
- taskDueDate.value = '';
-
  const modal = document.querySelector('#official-modal')
  const overlay = document.querySelector('#overlay-div');
  modal.setAttribute('style', 'visibility: hidden');
  overlay.setAttribute('style', 'visibility: hidden');
+
+ taskTitleInput.value = '';
+ taskDescriptionInput.value = '';
+ taskDateInput.value = '';
 
  return;
 
@@ -113,6 +113,10 @@ function handleDrop(event, ui) {
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
+  /* A date picker from JqueryUI to help input the due date */
+    $( function() {
+        $( "#task-date-input" ).datepicker();
+      } );
 
 });
 
