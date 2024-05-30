@@ -49,14 +49,19 @@ function createTaskCard(storedTasks) {
   const cardDescription = $('<p>').addClass('card-p card-desc').text(storedTasks.Description);
   const cardDueDate = $('<p>').addClass('card-p card-due-date').text(storedTasks.DueDate);
 
+  // need to make delete button
+
   if (storedTasks.taskDueDate && storedTasks.status !== 'done'); {
     const current = dayjs();
-    const taskDueDate = dayjs(storedTasks.taskDueDate);
+    const taskDueDate = dayjs(storedTasks.DueDate);
 
     if (current.isSame(taskDueDate, 'day')) {
-      card.addClass('due-today');
-    } else if (now.isAfter(taskDueDate)) {
-      card.addClass('past-date');
+      cardBody.addClass('due-today')
+    } else if (current.isAfter(taskDueDate, 'day')) {
+      cardBody.addClass('past-date')
+     // need to add delete btn cardDeleteButton.addClass('card-delete-btn');
+    } else if (current.diff(taskDueDate, 'day')) { // NEED TO FIX THIS!
+      cardBody.addClass('due-soon')
     }
   }
 
@@ -72,6 +77,7 @@ function renderTaskList(storedTasks) {
   const todoCards = $('#todo-cards').empty();
   const inProgressCards = $('#in-progress-cards').empty();
   const finishedCards = $('#done-cards').empty();
+  
   if (storedTasks && storedTasks.length > 0) {
     for (let i = 0; i < storedTasks.length; i++) {
       const card = createTaskCard(storedTasks[i]);
@@ -87,9 +93,6 @@ function renderTaskList(storedTasks) {
     }
   }
 
-  $( function() {
-    $( ".draggable" ).draggable({ revert: true });
-  } );
 
   
   };
@@ -132,16 +135,32 @@ function handleAddTask(event){
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
 
+
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+  const storedTasks = GetTaskInLocalStorage();
+  const taskId = ui.draggable[0].dataset.id
+  const newStatus = event.target.id;
+  
+  if (storedTasks && storedTasks.length > 0) {
+    for (let i = 0; i < storedTasks.length; i++) {
+      if (storedTasks.id === taskId) {
+        storedTasks.status = newStatus;
+      }
+    }
+  }
+
+  localStorage.setItem('tasks', JSON.stringify(storedTasks));
+  renderTaskList(storedTasks);
 
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
   /* A date picker from JqueryUI to help input the due date */
+
     $( function() {
         $( "#task-date-input" ).datepicker();
       } );
@@ -152,16 +171,25 @@ $(document).ready(function () {
         modal.setAttribute('style', 'visibility: visible');
         overlay.setAttribute('style', 'visibility: visible');
       })
+
+        $( ".draggable" ).draggable({ 
+          zIndex: 100,
+        });
+
+        $('.lane').droppable({
+          accept: ".draggable",
+          drop: handleDrop
+          });
+        });  
+
+        
       
+
       
       addTaskInputBtn.addEventListener('click', handleAddTask)
       
       renderTaskList(storedTasks);
       
-
-
-
-});
 
 
 
