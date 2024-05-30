@@ -88,9 +88,10 @@ function renderTaskList(storedTasks) {
   }
 
   $( function() {
-    $( ".draggable" ).draggable();
+    $( ".draggable" ).draggable({ revert: true });
   } );
 
+  
   };
 
 // Todo: create a function to handle adding a new task
@@ -145,22 +146,22 @@ $(document).ready(function () {
         $( "#task-date-input" ).datepicker();
       } );
 
+      addTaskBtn.addEventListener('click', function() {
+        const modal = document.querySelector('#official-modal')
+        const overlay = document.querySelector('#overlay-div');
+        modal.setAttribute('style', 'visibility: visible');
+        overlay.setAttribute('style', 'visibility: visible');
+      })
+      
+      
+      addTaskInputBtn.addEventListener('click', handleAddTask)
+      
+      renderTaskList(storedTasks);
+      
 
 
 
 });
-
-addTaskBtn.addEventListener('click', function() {
-  const modal = document.querySelector('#official-modal')
-  const overlay = document.querySelector('#overlay-div');
-  modal.setAttribute('style', 'visibility: visible');
-  overlay.setAttribute('style', 'visibility: visible');
-})
-
-
-addTaskInputBtn.addEventListener('click', handleAddTask)
-
-renderTaskList(storedTasks);
 
 
 

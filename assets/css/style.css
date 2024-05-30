@@ -116,3 +116,9 @@ body {
     margin: 0px 20px;
     text-align: left;
   }
+
+  #card {
+    display: flex;
+    position: relative;
+    z-index: 100;
+  }
