@@ -64,7 +64,31 @@ function renderTaskList() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
+ // maybe I should of start with this one to get more information? Like inputs...
+    
+ //Storing data into variables.
+ const taskTitle = taskTitleInput.value;
+ const taskDescription = taskDescriptionInput.value;
+ const taskDueDate = taskDateInput.value;
 
+ const genTask = {
+    id: generateTaskId(),
+    Title: taskTitle,
+    Description: taskDescription,
+    DueDate: taskDueDate,
+    status: 'To-Do'
+ }
+
+ const gatherStorage = GetTaskInLocalStorage();
+ gatherStorage.push(genTask);
+
+ saveTaskInLocalStorage();
+
+ taskTitle.value = '';
+ taskDescription.value = '';
+ taskDueDate.value = '';
+
+ // Not getting any input into the storage...
 }
 
 // Todo: create a function to handle deleting a task
