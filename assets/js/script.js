@@ -43,7 +43,7 @@ function generateTaskId() {
 function createTaskCard(storedTasks) {
   GetTaskInLocalStorage();
 
-  const card = $('<div>').addClass('card my-2 draggable').attr('task-id', storedTasks.id);
+  const card = $('<div>').addClass('card my-2 draggable').attr('data-id', storedTasks.id);
   const cardBody = $('<div>').addClass('card-body');
   const cardHeader = $('<h2>').addClass('card-title').text(storedTasks.Title);
   const cardDescription = $('<p>').addClass('card-p card-desc').text(storedTasks.Description);
@@ -84,16 +84,19 @@ function renderTaskList(storedTasks) {
         todoCards.append(card);
       } else if (storedTasks[i].status === 'in-progress') {
         inProgressCards.append(card);
-      } else if (storedTasks[i].status === 'finished') {
+      } else if (storedTasks[i].status === 'done') {
         finishedCards.append(card);
       }
   
     }
   }
 
-
   
-  };
+  
+  $( ".draggable" ).draggable({ 
+    zIndex: 100,
+  });
+};
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
@@ -144,8 +147,8 @@ function handleDrop(event, ui) {
   
   if (storedTasks && storedTasks.length > 0) {
     for (let i = 0; i < storedTasks.length; i++) {
-      if (storedTasks.id === taskId) {
-        storedTasks.status = newStatus;
+      if (storedTasks[i].id === taskId) {
+        storedTasks[i].status = newStatus;
       }
     }
   }
@@ -176,6 +179,7 @@ $(document).ready(function () {
 
         $('.lane').droppable({
           accept: ".draggable",
+          tolerance: 'intersect',
           drop: handleDrop
           });
         });  
@@ -187,6 +191,8 @@ $(document).ready(function () {
       addTaskInputBtn.addEventListener('click', handleAddTask)
       
       renderTaskList(storedTasks);
+
+      
       
 
 
