@@ -60,8 +60,6 @@ function createTaskCard(storedTasks) {
     } else if (current.isAfter(taskDueDate, 'day')) {
       cardBody.addClass('past-date')
      // need to add delete btn cardDeleteButton.addClass('card-delete-btn');
-    } else if (current.diff(taskDueDate, 'day')) { // NEED TO FIX THIS!
-      cardBody.addClass('due-soon')
     }
   }
 
