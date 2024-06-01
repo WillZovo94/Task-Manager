@@ -10,10 +10,6 @@ body {
   .task-card {
     margin: 0 auto;
   }
-  
-  .task-card:hover {
-    cursor: grab;
-  }
 
   .due-today {
     background-color: yellow;
@@ -22,7 +18,30 @@ body {
   .past-date {
     background-color: red;
     color: white;
+  }
 
+  .card-title-task {
+    font-size: 25px;
+    border-bottom: 2px solid rgba(0,0,0,0.3);
+    padding-bottom: 10px;
+  }
+
+  .card-desc {
+    margin-bottom: 20px;
+  }
+
+  .card-delete-btn {
+    border: 1px solid black;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 5px 40px;
+    cursor: pointer;
+  }
+
+  .card-delete-btn:hover {
+    opacity: 0.9;
+    background-color: black;
+    color: white;
   }
   
 
@@ -79,10 +98,10 @@ body {
 
   #cancel-btn {
     position: relative;
-    padding: 2px 5px;
+    padding: 2px 15px;
     border-radius: 5px;
     border: none;
-    background-color: black;
+    background-color: grey;
     color: white;
   }
 
@@ -132,3 +151,41 @@ body {
     position: relative;
     z-index: 100;
   }
+
+  
+  .draggable {
+    border-radius: 15px;
+  }
+  
+  .draggable:hover {
+    cursor: grab;
+  }
+
+
+  #done-cards .card-body {
+    background-color: white;
+    color: black;
+  }
+
+  .card-body {
+    border-radius: 15px;
+  }
+
+  #add-task-btn {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px 0;
+  }
+
+  #cancel-task-button {
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+
+  

@@ -4,6 +4,7 @@ const taskDescriptionInput = document.querySelector('#task-description-input');
 const addTaskBtn = document.querySelector(".btn-success");
 const cancelTaskBtn = document.querySelector("#cancel-btn");
 const addTaskInputBtn = document.querySelector("#add-task-btn")
+const deleteButtonCard = document.querySelector('.card-delete-btn')
 
 
 // Retrieve tasks and nextId from localStorage
@@ -45,9 +46,10 @@ function createTaskCard(storedTasks) {
 
   const card = $('<div>').addClass('card my-2 draggable').attr('data-id', storedTasks.id);
   const cardBody = $('<div>').addClass('card-body');
-  const cardHeader = $('<h2>').addClass('card-title').text(storedTasks.Title);
+  const cardHeader = $('<h2>').addClass('card-title-task').text(storedTasks.Title);
   const cardDescription = $('<p>').addClass('card-p card-desc').text(storedTasks.Description);
   const cardDueDate = $('<p>').addClass('card-p card-due-date').text(storedTasks.DueDate);
+  const cardDeleteButton = $('<button>').addClass('card-delete-btn btn').text('Delete').attr('data-task-id', storedTasks.id);
 
   // need to make delete button
 
@@ -63,7 +65,9 @@ function createTaskCard(storedTasks) {
     }
   }
 
-  cardBody.append(cardHeader, cardDescription, cardDueDate);
+
+
+  cardBody.append(cardHeader, cardDescription, cardDueDate, cardDeleteButton);
   card.append(cardBody);
 
 
@@ -95,6 +99,7 @@ function renderTaskList(storedTasks) {
   
   $( ".draggable" ).draggable({ 
     zIndex: 100,
+    revert: 'invalid'
   });
 };
 
@@ -135,8 +140,19 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
+  event.preventDefault();
+  const thisSelector = $(this).attr('data-task-id');
+  const getStorage = GetTaskInLocalStorage();
 
+  getStorage.forEach((storedTasks) => {
+    if (storedTasks.id === thisSelector) {
+      getStorage.splice(getStorage.indexOf(storedTasks), 1)
+    }
+  })
 
+  saveTaskInLocalStorage(getStorage);
+  
+  renderTaskList(getStorage);
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
@@ -175,6 +191,7 @@ $(document).ready(function () {
 
         $( ".draggable" ).draggable({ 
           zIndex: 100,
+          revert: 'invalid'
         });
 
         $('.lane').droppable({
@@ -183,10 +200,9 @@ $(document).ready(function () {
           drop: handleDrop
           });
         });  
-
         
-      
-
+        const test = $('.lane');
+        test.on('click', '.btn', handleDeleteTask)
       
       addTaskInputBtn.addEventListener('click', handleAddTask)
       
