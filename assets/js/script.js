@@ -225,7 +225,6 @@ $(document).ready(function () {
       addTaskInputBtn.addEventListener('click', handleAddTask)
       
       renderTaskList(storedTasks);
-
       
       
 

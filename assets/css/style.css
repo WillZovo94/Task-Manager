@@ -200,4 +200,19 @@ body {
     background-color: var(--bg-color-gray);
   }
 
-  
+  #cancel-task-button:hover, #cancel-btn:hover, #add-task-btn:hover {
+    opacity: 0.7;
+  }
+
+  /*Added some responsiveness for smaller screens with modal*/
+  @media screen and (max-width: 450px) {
+    #official-modal {
+      width: 400px;
+    }
+    #official-modal input {
+      width: 150px;
+    }
+   #modal-content-2 textarea {
+    width: 350px;
+  }
+}
