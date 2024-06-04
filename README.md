@@ -10,12 +10,13 @@
 
 ## Usage
 - You're given a responsive task board that is ready for adding new tasks.
-
+![Main Page](/assets/images/taskboard-pic-1.png)
 - Once you click the new task button, you're given a modal that takes in user input.
-
+![Modal](/assets/images/taskboard-pic-2.png)
 - Then the user will see their information put on a task card. The color is based on if the card is past due, on the due date, or due later. Also, a given delete button to organize and delete tasks if required
-
+![Task Cards](/assets/images/taskboard-pic-3.png)
 - user data is stored on local storage.
+![Stored Info](/assets/images/taskboard-pic-4.png)
 
 ## Features
 - Access to add task button which intakes your input.
